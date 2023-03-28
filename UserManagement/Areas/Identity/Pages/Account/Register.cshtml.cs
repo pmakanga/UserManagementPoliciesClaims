@@ -133,16 +133,16 @@ namespace UserManagement.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    if (Request.Form.Files.Count > 0) // Adding the profile picture
-                    {
-                        IFormFile file = Request.Form.Files.FirstOrDefault();
-                        using (var dataStream = new MemoryStream())
-                        {
-                            await file.CopyToAsync(dataStream);
-                            user.ProfilePicture = dataStream.ToArray();
-                        }
-                        await _userManager.UpdateAsync(user);
-                    }
+                    //if (Request.Form.Files.Count > 0) // Adding the profile picture
+                    //{
+                    //    IFormFile file = Request.Form.Files.FirstOrDefault();
+                    //    using (var dataStream = new MemoryStream())
+                    //    {
+                    //        await file.CopyToAsync(dataStream);
+                    //        user.ProfilePicture = dataStream.ToArray();
+                    //    }
+                    //    await _userManager.UpdateAsync(user);
+                    //}
 
                     _logger.LogInformation("User created a new account with password.");
 
@@ -178,11 +178,12 @@ namespace UserManagement.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private User CreateUser()
+        private IdentityUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<User>();
+                return Activator.CreateInstance<IdentityUser>();
+
             }
             catch
             {
