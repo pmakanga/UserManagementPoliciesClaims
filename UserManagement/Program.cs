@@ -1,7 +1,10 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using NToastNotify;
 using UserManagement.Data;
 using UserManagement.Permission;
 
@@ -18,6 +21,21 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
 
 //builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
 //    .AddEntityFrameworkStores<DataContext>();
+
+// add NToastNotify
+builder.Services.AddRazorPages().AddNToastNotifyNoty(new NotyOptions
+{
+    ProgressBar = true,
+    Timeout = 5000
+});
+
+// Add ToastNotification
+builder.Services.AddNotyf(config =>
+{
+    config.DurationInSeconds = 5;
+    config.IsDismissable = true;
+    config.Position = NotyfPosition.TopRight;
+});
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -56,6 +74,11 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.UseNToastNotify();
+
+app.UseNotyf();
+
 app.MapRazorPages();
 
 app.Run();
