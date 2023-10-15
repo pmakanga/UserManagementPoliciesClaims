@@ -63,6 +63,9 @@ namespace UserManagement.Controllers
             notyfService.Information("Information message!");
             notyfService.Error("Error message!");
             notyfService.Warning("Warning message!");
+
+            notyfService.Custom("Here is a message for you - closes in 8 seconds.", 8, "#602AC3", "fa fa-envelope-o");
+            notyfService.Custom("Please check the settings for your profile - closes in 6 seconds.", 6, "#0c343d", "fa fa-user");
             return View(model);
         }
 
